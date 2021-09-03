@@ -1,20 +1,56 @@
-<HTML>
+<!doctype html>
 
-<HEAD>
-    <TITLE>Ejemplo 7</TITLE>
-</HEAD>
+<html lang="es">
 
-<BODY>
-    <H1>Título 1</H1>
-    <H2>Título 2</H2>
-    <H3>Título 3</H3>
-    <H4>Título 4</H4>
-    <H5>Título 5</H5>
-    <H6>Título 6</H6>
-    <H7>Título 7 (como no existe, no supone ningún cambio)</H7>
-    <P>Además, los títulos pueden recibir indicaciones de alineación, como en los siguientes ejemplos</P>
-    <H3 align="center">Título centrado</H3>
-    <H3 align="right">Título a la derecha</H3>
-</BODY>
+<head>
 
-</HTML>
+    <meta charset="utf-8">
+
+    <title> Formulario de Acceso </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Overpass&display=swap" rel="stylesheet">
+
+    <!-- Link hacia el archivo de estilos css -->
+    <link rel="stylesheet" href="css/login.css">
+
+    <style type="text/css">
+
+    </style>
+
+    <script type="text/javascript">
+    </script>
+
+</head>
+
+<body>
+
+    <div id="contenedor">
+        <div id="central">
+            <div id="login">
+                <div class="titulo">
+                    Bienvenido
+                </div>
+                <form id="loginform">
+                    <input type="text" name="usuario" placeholder="Usuario" required>
+
+                    <input type="password" placeholder="Contraseña" name="password" required>
+
+                    <button type="submit" title="Ingresar" name="Ingresar">Login</button>
+                </form>
+                <div class="pie-form">
+                    <a href="#">¿Perdiste tu contraseña?</a>
+                    <a href="#">¿No tienes Cuenta? Registrate</a>
+                </div>
+            </div>
+            <div class="inferior">
+                <a href="#">Volver</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
