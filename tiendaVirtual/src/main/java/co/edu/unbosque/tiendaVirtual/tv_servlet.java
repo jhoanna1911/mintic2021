@@ -44,18 +44,6 @@ public class tv_servlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// consultarUsuario
-		/*
-		 * response.getWriter().append("Served at: ").append(request.getContextPath());
-		 * String Usuario = request.getParameter("Usuario"); String Contrasena =
-		 * request.getParameter("Contrasena"); PrintWriter writer =
-		 * response.getWriter();
-		 * 
-		 * if (Usuario != null && Contrasena != null) { writer.println("Bienvenido " +
-		 * Usuario + " a la tienda virtual"); } else
-		 * writer.println("Debe llenar todos los campos");
-		 */
 	}
 
 	/**
@@ -66,19 +54,25 @@ public class tv_servlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		conexion = new conector();
+		
+		//Modulo usuarios
+		
 		String Usuario = request.getParameter("Usuario");
 		String Contrasena = request.getParameter("Contrasena");
 		String botonConsulta = request.getParameter("cedula");
+		
 		String CreaCedula = request.getParameter("CreaCedula");
 		String Creanombre = request.getParameter("Creanombre");
 		String CreaCorreo = request.getParameter("CreaCorreo");
 		String CreaUsuario = request.getParameter("CreaUsuario");
 		String CreaContrasena = request.getParameter("CreaContrasena");
+		
 		String ActualizaCedula = request.getParameter("ActualizaCedula");
 		String Actualizanombre = request.getParameter("Actualizanombre");
 		String ActualizaCorreo = request.getParameter("ActualizaCorreo");
 		String ActualizaUsuario = request.getParameter("ActualizaUsuario");
 		String ActualizaContrasena = request.getParameter("ActualizaContrasena");
+		
 		String cedulaBorrar = request.getParameter("cedulaBorrar");
 		
 
@@ -109,7 +103,7 @@ public class tv_servlet extends HttpServlet {
 			JDialog dialog = optionPane.createDialog("Consulta");
 			dialog.setAlwaysOnTop(true);
 			dialog.setVisible(true);
-			response.sendRedirect("consultar.jsp");
+			response.sendRedirect("consultarUsuario.jsp");
 		}
 
 		else if (CreaUsuario != null && CreaContrasena != null && CreaCedula != null) {
@@ -122,14 +116,14 @@ public class tv_servlet extends HttpServlet {
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
-				response.sendRedirect("usuario.jsp");
+				response.sendRedirect("crearUsuario.jsp");
 			}
 			else if (usuarioCrear != null) {
 				JOptionPane optionPane = new JOptionPane("El usuario ingresada ya existe en la base de datos", JOptionPane.WARNING_MESSAGE);
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
-				response.sendRedirect("usuario.jsp");
+				response.sendRedirect("crearUsuario.jsp");
 			}
 			else {
 				conexion.InsertarUsuario(CreaCedula, Creanombre, CreaCorreo, CreaUsuario, CreaContrasena);
@@ -137,7 +131,7 @@ public class tv_servlet extends HttpServlet {
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
-				response.sendRedirect("usuario.jsp");
+				response.sendRedirect("crearUsuario.jsp");
 			}
 		}
 		
@@ -151,14 +145,14 @@ public class tv_servlet extends HttpServlet {
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
-				response.sendRedirect("actualizar.jsp");
+				response.sendRedirect("actualizarUsuario.jsp");
 			}
 			else {
 				JOptionPane optionPane = new JOptionPane("La cedula del usuario que desea actualizar no existe", JOptionPane.WARNING_MESSAGE);
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
-				response.sendRedirect("actualizar.jsp");
+				response.sendRedirect("actualizarUsuario.jsp");
 			}
 			
 		}
@@ -171,7 +165,7 @@ public class tv_servlet extends HttpServlet {
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
-				response.sendRedirect("borrar.jsp");
+				response.sendRedirect("borrarUsuario.jsp");
 			}
 			else {
 			conexion.EliminaUsuario(cedulaBorrar);
@@ -179,7 +173,7 @@ public class tv_servlet extends HttpServlet {
 			JDialog dialog = optionPane.createDialog("MinTech");
 			dialog.setAlwaysOnTop(true);
 			dialog.setVisible(true);
-			response.sendRedirect("borrar.jsp");
+			response.sendRedirect("borrarUsuario.jsp");
 			}
 		}
 	}
