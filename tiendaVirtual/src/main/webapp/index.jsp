@@ -34,6 +34,7 @@
 		<div id="central">
 			<div id="login">
 				<div class="titulo">Bienvenido</div>
+				<img src="Imagenes/MINTECH.png" class="logo"> 
 				<form id="loginform" method="post" action="./tv_servlet">
 					<input type="text" name="Usuario" placeholder="Usuario" required>
 
@@ -41,10 +42,6 @@
 						required>
 					<button type="submit" title="Ingresar" name="Ingresar">Ingresar</button>
 				</form>
-				<div class="pie-form">
-					<a href="#">¿Perdiste tu contraseña?</a> <a href="#">¿No tienes
-						Cuenta? Registrate</a>
-				</div>
 			</div>
 			<div class="inferior">
 				<a href="#">Volver</a>

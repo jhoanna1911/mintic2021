@@ -10,7 +10,7 @@
 </head>
 <body>
 	<header class="header">
-       	<a href="#" class="logo">LOGO</a>
+       	<img src="Imagenes/MINTECH.png" class="logo"> 
        	<h1>MinTech</h1>
             
     </header>
