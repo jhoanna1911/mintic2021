@@ -1,4 +1,4 @@
-package modelo.conector;
+package modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.cj.xdevapi.Statement;
-
-import modelo.usuario.usuario;
 
 public class conector {
 	private static Connection con = null;
@@ -25,6 +23,8 @@ public class conector {
 			e.printStackTrace();
 		}
 	}
+	
+	//Modulo usuarios
 
 	public Boolean validarUsuario(String usuario, String contrasena) {
 		conectar();
@@ -132,5 +132,32 @@ public class conector {
 		}
 	}
 	
+	//Modulo clientes
+	
+	public cliente consultarCliente(String cedulaI) {
+		conectar();
+		cliente cliente = new cliente();
+		String consulta = "SELECT * FROM tienda_virtual.clientes WHERE cedulaCliente = '" + cedulaI + "'";
+		try {
+			java.sql.Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
+			 if (rs.next()) {
+				  String cedula = rs.getString("cedulaCliente");
+				  cliente.setCedulaCliente(cedula);
+				  String nombre = rs.getString("nombreCliente");
+				  cliente.setNombreCliente(nombre);
+				  String direccion = rs.getString("direccionCliente");
+				  cliente.setDireccionCliente(direccion);
+				  String telefono = rs.getString("telefonoCliente");
+				  cliente.setTelefonoCliente(telefono);
+				  String correo = rs.getString("correoCliente"); 
+				  cliente.setCorreoCliente(correo);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cliente;
+	}
 	
 }

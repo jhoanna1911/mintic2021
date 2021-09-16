@@ -16,7 +16,7 @@
 			<br>
 			<p>Cedula:</p>
 			<form action=./tv_servlet method="post">
-				<input class="ingdatos" type="text" name="cedula" required>
+				<input class="ingdatos" type="text" name="cedulaUsuario" required>
 				<br> <br>
 				<p>
 					<input type="submit" class="boton-crea" id="botonConsulta"

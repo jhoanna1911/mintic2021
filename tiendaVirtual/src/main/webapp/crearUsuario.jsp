@@ -13,7 +13,7 @@
        <div id="Contenido">            
             <section  class="registro">
             <form action=./tv_servlet method="post">
-                <h2>Ingresar usuario</h2><br>
+                <h2>Crear usuario</h2><br>
                 <p>Cedula: </p>
                 <input class="ingdatos" type="text" id="cedula" name="CreaCedula" required> 
                 <p>Nombre completo:</p>
@@ -25,7 +25,7 @@
                 <p>Contraseña:</p>
                 <input class="ingdatos" type="text" id="contraseña" name="CreaContrasena" required> 
                 <br> <br>  
-                <p><input type="submit" class="boton-crea" value="Ingresar"></p>
+                <p><input type="submit" class="boton-crea" value="Crear"></p>
                 <br>
                 </form>
             </section>
