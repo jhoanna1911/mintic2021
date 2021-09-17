@@ -201,5 +201,72 @@ public class conector {
 			e.printStackTrace();
 		}
 	}
+	
+	// Modulo proveedores
+	
+	public proveedor consultarProveedor(String nit) {
+		conectar();
+		proveedor proveedor = new proveedor();
+		String consulta = "SELECT * FROM tienda_virtual.proveedores WHERE nit = '" + nit + "'";
+		try {
+			java.sql.Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery(consulta);
+			if (rs.next()) {
+				String nitP = rs.getString("nit");
+				proveedor.setNit(nitP);
+				String nombre = rs.getString("nombreProveedor");
+				proveedor.setNombreProveedor(nombre);
+				String direccion = rs.getString("direccionProveedor");
+				proveedor.setDireccionProveedor(direccion);
+				String telefono = rs.getString("telefonoProveedor");
+				proveedor.setTelefonoProveedor(telefono);
+				String ciudad = rs.getString("ciudadProveedor");
+				proveedor.setCiudadProveedor(ciudad);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return proveedor;
+	}
+	
+	public void InsertarProveedor(String nit, String nombre, String direccion, String telefono, String ciudad) {
+		conectar();
+		String consulta = "INSERT INTO tienda_virtual.proveedores (nit,nombreProveedor,direccionProveedor,telefonoProveedor,ciudadProveedor) VALUES ('"
+				+ nit + "' , '" + nombre + "' , '" + direccion + "' , '" + telefono + "' , '" + ciudad + "')";
+		try {
+			java.sql.Statement stm = con.createStatement();
+			stm.executeUpdate(consulta);
+		} catch (SQLException e) {
+			System.out.println("No se ha logrado la operacion");
+			e.printStackTrace();
+		}
+	}
+	
+	public void ActualizarProveedor(String nit, String nombre, String direccion, String telefono, String ciudad) {
+		conectar();
+		String consulta = "UPDATE tienda_virtual.proveedores SET nombreProveedor = '" + nombre + "' , direccionProveedor = '"
+				+ direccion + "' , telefonoProveedor = '" + telefono + "' , ciudadProveedor = '" + ciudad
+				+ "' WHERE nit = " + nit;
+		try {
+			java.sql.Statement stm = con.createStatement();
+			stm.executeUpdate(consulta);
+		} catch (SQLException e) {
+			System.out.println("No se ha logrado la operacion");
+			e.printStackTrace();
+		}
+	}
+	
+	public void EliminaProveedor(String nit) {
+		conectar();
+		String consulta = "DELETE FROM tienda_virtual.proveedores WHERE nit = " + nit;
+		try {
+			java.sql.Statement stm = con.createStatement();
+			stm.executeUpdate(consulta);
+		} catch (SQLException e) {
+			System.out.println("No se ha logrado la operacion");
+			e.printStackTrace();
+		}
+	}
 
 }

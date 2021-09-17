@@ -2,6 +2,7 @@ package co.edu.unbosque.tiendaVirtual;
 
 import modelo.cliente;
 import modelo.conector;
+import modelo.proveedor;
 import modelo.usuario;
 
 import java.io.IOException;
@@ -96,6 +97,23 @@ public class tv_servlet extends HttpServlet {
 		
 		String cedulaBorrarCliente = request.getParameter("cedulaBorrarCliente");
 		
+		// Modulo proveedores
+		
+		String botonConsultaProveedor = request.getParameter("nit");
+		
+		String CreaNitProveedor = request.getParameter("CreaNit");
+		String CreanombreProveedor = request.getParameter("CreanombreProveedor");
+		String CreaDireccionProveedor = request.getParameter("CreaDireccionProveedor");
+		String CreaTelefonoProveedor = request.getParameter("CreaTelefonoProveedor");
+		String CreaCiudadProveedor = request.getParameter("CreaCiudadProveedor");
+		
+		String ActualizaNit = request.getParameter("ActualizaNit");
+		String ActualizanombreP = request.getParameter("ActualizanombreP");
+		String ActualizaDireccionP = request.getParameter("ActualizaDireccionP");
+		String ActualizaTelefonoP = request.getParameter("ActualizaTelefonoP");
+		String ActualizaCiudadP = request.getParameter("ActualizaCiudadP");
+		
+		String nitBorrarP = request.getParameter("nitBorrar");
 
 		Boolean validaUsuario = conexion.validarUsuario(Usuario, Contrasena);
 		RequestDispatcher rd;
@@ -141,6 +159,8 @@ public class tv_servlet extends HttpServlet {
 			}
 		}
 
+		//Crea usuario
+		
 		else if (CreaUsuario != null && CreaContrasena != null && CreaCedula != null) {
 			usuario cedula = conexion.consultarUsuario(CreaCedula);
 			String cedulaCrear = cedula.getCedulaUsuario();
@@ -304,6 +324,98 @@ public class tv_servlet extends HttpServlet {
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
 				response.sendRedirect("borrarCliente.jsp");
+			}
+		}
+		
+		//Modulo proveedores
+		
+		else if (botonConsultaProveedor != null) {
+
+			proveedor proveedor = conexion.consultarProveedor(botonConsultaProveedor);
+			String nombreProveedor = proveedor.getNombreProveedor();
+			String nitProveedor = proveedor.getNit();
+			String ciudadProveedor = proveedor.getCiudadProveedor();
+			String telefonoProveedor = proveedor.getTelefonoProveedor();
+			String direccionProveedor = proveedor.getDireccionProveedor();
+			if (nombreProveedor != null) {
+				JOptionPane optionPane = new JOptionPane("Nombre: " + nombreProveedor + "\n" + "Nit: " + nitProveedor
+						+ "\n" + "Ciudad: " + ciudadProveedor + "\n" + "Teléfono: " + telefonoProveedor + "\n" +  "Dirección: " + direccionProveedor + "\n");
+				JDialog dialog = optionPane.createDialog("Cliente");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("consultarProveedor.jsp");
+			}
+			else {
+				JOptionPane optionPane = new JOptionPane("El nit del proveedor no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("consultarProveedor.jsp");
+			}
+		}
+		
+		else if (CreaNitProveedor != null) {
+			proveedor proveedor = conexion.consultarProveedor(CreaNitProveedor);
+			String nitCrearCliente = proveedor.getNit();
+			if (nitCrearCliente != null) {
+				JOptionPane optionPane = new JOptionPane("El nit ingresado ya existe en la base de datos",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("crearProveedor.jsp");
+			} else {
+				conexion.InsertarProveedor(CreaNitProveedor, CreanombreProveedor, CreaDireccionProveedor, CreaTelefonoProveedor, CreaCiudadProveedor);
+				JOptionPane optionPane = new JOptionPane("Proveedor creado exitosamente");
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("crearProveedor.jsp");
+			}
+		}
+		
+		else if (ActualizaNit != null) {
+			proveedor proveedor = conexion.consultarProveedor(ActualizaNit);
+			String actualizaNit = proveedor.getNit();
+			if (actualizaNit != null) {
+				conexion.ActualizarProveedor(ActualizaNit, ActualizanombreP, ActualizaDireccionP, ActualizaTelefonoP,
+						ActualizaCiudadP);
+				JOptionPane optionPane = new JOptionPane(
+						"El proveedor " + ActualizanombreP + " se actualizo exitosamente");
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("actualizarProveedor.jsp");
+			} else {
+				JOptionPane optionPane = new JOptionPane("El nit del proveedor que desea actualizar no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("actualizarProveedor.jsp");
+			}
+
+		}
+		
+		else if (nitBorrarP != null) {
+			proveedor proveedor = conexion.consultarProveedor(nitBorrarP);
+			String eliminaNit = proveedor.getNit();
+			if (eliminaNit == null) {
+				JOptionPane optionPane = new JOptionPane("El nit del proveedor que desea eliminar no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("borrarProveedor.jsp");
+			} else {
+				conexion.EliminaProveedor(nitBorrarP);
+				JOptionPane optionPane = new JOptionPane(
+						"Se ha eliminado el proveedor con numero de nit " + nitBorrarP);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("borrarProveedor.jsp");
 			}
 		}
 		
