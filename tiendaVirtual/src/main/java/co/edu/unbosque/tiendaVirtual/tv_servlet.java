@@ -5,7 +5,6 @@ import modelo.conector;
 import modelo.usuario;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -82,6 +81,21 @@ public class tv_servlet extends HttpServlet {
 		// Modulo clientes
 		
 		String botonConsultaCliente = request.getParameter("cedulaCliente");
+		
+		String CreaCedulaCliente = request.getParameter("CreaCedulaCliente");
+		String CreanombreCliente = request.getParameter("CreanombreCliente");
+		String CreaDireccionCliente = request.getParameter("CreaDirecciónCliente");
+		String CreaTelefonoCliente = request.getParameter("CreaTelefonoCliente");
+		String CreaCorreoCliente = request.getParameter("CreaCorreoCliente");
+		
+		String ActualizaCedulaCliente = request.getParameter("ActualizaCedulaCliente");
+		String ActualizanombreCliente = request.getParameter("ActualizanombreCliente");
+		String ActualizaDireccionCliente = request.getParameter("ActualizaDireccionCliente");
+		String ActualizaTelefonoCliente = request.getParameter("ActualizaTelefonoCliente");
+		String ActualizaCorreoCliente = request.getParameter("ActualizaCorreoCliente");
+		
+		String cedulaBorrarCliente = request.getParameter("cedulaBorrarCliente");
+		
 
 		Boolean validaUsuario = conexion.validarUsuario(Usuario, Contrasena);
 		RequestDispatcher rd;
@@ -226,6 +240,70 @@ public class tv_servlet extends HttpServlet {
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
 				response.sendRedirect("consultarCliente.jsp");
+			}
+		}
+		
+		else if (CreaCedulaCliente != null) {
+			cliente cedula = conexion.consultarCliente(CreaCedulaCliente);
+			String cedulaCrearCliente = cedula.getCedulaCliente();
+			if (cedulaCrearCliente != null) {
+				JOptionPane optionPane = new JOptionPane("La cedula ingresada ya existe en la base de datos",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("crearCliente.jsp");
+			} else {
+				conexion.InsertarCliente(CreaCedulaCliente, CreanombreCliente, CreaDireccionCliente, CreaTelefonoCliente, CreaCorreoCliente);
+				JOptionPane optionPane = new JOptionPane("Cliente creado exitosamente");
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("crearCliente.jsp");
+			}
+		}
+		
+		else if (ActualizaCedulaCliente != null) {
+			cliente cedula = conexion.consultarCliente(ActualizaCedulaCliente);
+			String actualizaCedula = cedula.getCedulaCliente();
+			if (actualizaCedula != null) {
+				conexion.ActualizarCliente(ActualizaCedulaCliente, ActualizanombreCliente, ActualizaDireccionCliente, ActualizaTelefonoCliente,
+						ActualizaCorreoCliente);
+				JOptionPane optionPane = new JOptionPane(
+						"El cliente " + ActualizanombreCliente + " se actualizo exitosamente");
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("actualizarCliente.jsp");
+			} else {
+				JOptionPane optionPane = new JOptionPane("La cedula del cliente que desea actualizar no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("actualizarCliente.jsp");
+			}
+
+		}
+		
+		else if (cedulaBorrarCliente != null) {
+			cliente cedula = conexion.consultarCliente(cedulaBorrarCliente);
+			String eliminaCedula = cedula.getCedulaCliente();
+			if (eliminaCedula == null) {
+				JOptionPane optionPane = new JOptionPane("La cedula del cliente que desea eliminar no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("borrarCliente.jsp");
+			} else {
+				conexion.EliminaCliente(cedulaBorrarCliente);
+				JOptionPane optionPane = new JOptionPane(
+						"Se ha eliminado el cliente con numero de cedula " + cedulaBorrarCliente);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("borrarCliente.jsp");
 			}
 		}
 		

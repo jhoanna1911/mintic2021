@@ -6,7 +6,7 @@
 	<meta charset="ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="estilo.css">
     <meta charset="utf-8">
-	<title>Consultar</title>
+	<title>Actualizar</title>
 </head>
 <body>
 <%@include file="administracion.jsp" %>
