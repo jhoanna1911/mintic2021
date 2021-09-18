@@ -110,6 +110,7 @@ input{
     border: solid 1px  rgb(214, 214, 214) ;
     padding: 3px ;
     margin: 0 auto;
+    width: 40%;
     
 }
 .ingdatos:focus{

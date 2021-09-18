@@ -23,28 +23,30 @@
 					<li><a href="crearUsuario.jsp">Crear</a></li>
 					<li><a href="actualizarUsuario.jsp">Actualizar</a></li>
 					<li><a href="borrarUsuario.jsp">Eliminar</a></li>
-				</ul>
-			</li>
+				</ul></li>
 
 			<li id="item"><a href="#">Clientes</a>
-			<ul id="submenu">
+				<ul id="submenu">
 					<li><a href="consultarCliente.jsp">Consultar</a></li>
 					<li><a href="crearCliente.jsp">Crear</a></li>
 					<li><a href="actualizarCliente.jsp">Actualizar</a></li>
 					<li><a href="borrarCliente.jsp">Eliminar</a></li>
-				</ul>
-			</li>
-				
+				</ul></li>
+
 			<li id="item"><a href="#">Provedores</a>
-			<ul id="submenu">
+				<ul id="submenu">
 					<li><a href="consultarProveedor.jsp">Consultar</a></li>
 					<li><a href="crearProveedor.jsp">Crear</a></li>
 					<li><a href="actualizarProveedor.jsp">Actualizar</a></li>
 					<li><a href="borrarProveedor.jsp">Eliminar</a></li>
-				</ul>
-			</li>
+				</ul></li>
+
+			<li id="item"><a href="#">Productos</a>
+			<ul id="submenu">
+				<li><a href="cargarProductos.jsp">Cargar</a></li>
+			</ul></li>
 			
-			<li id="item"><a href="#">Productos</a></li>
+			
 			<li id="item"><a href="#">Ventas</a></li>
 			<li id="item"><a href="#">Reportes</a></li>
 		</ul>
