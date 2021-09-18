@@ -15,7 +15,7 @@
 			<h2>Consultar usuario</h2>
 			<br>
 			<p>Cedula:</p>
-			<form action=./tv_servlet method="post">
+			<form action=./tv_servlet method="get">
 				<input class="ingdatos" type="text" name="cedulaUsuario" required>
 				<br> <br>
 				<p>

@@ -15,7 +15,7 @@
 			<h2>Consultar proveedor</h2>
 			<br>
 			<p>Nit:</p>
-			<form action=./tv_servlet method="post">
+			<form action=./tv_servlet method="get">
 				<input class="ingdatos" type="text" name="nit" required>
 				<br> <br>
 				<p>
