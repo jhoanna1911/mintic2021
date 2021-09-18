@@ -10,11 +10,11 @@ import com.mysql.cj.xdevapi.Statement;
 public class conector {
 	private static Connection con = null;
 	private Iterable<usuario> usuario;
-
+	
 	public static void conectar() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "abc123");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "1234");
 			System.out.println("Conexion exitosa con la base de datos");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error en el controlador de conexión" + e);

@@ -45,6 +45,101 @@ public class tv_servlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		String botonConsultaUsuario = request.getParameter("cedulaUsuario");
+		String botonConsultaCliente = request.getParameter("cedulaCliente");
+		String botonConsultaProveedor = request.getParameter("nit");
+		//Consulta cliente
+		
+		if (botonConsultaUsuario != null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaUsuario.jsp");
+			
+			usuario usuario = conexion.consultarUsuario(botonConsultaUsuario);
+			String nombreUsuario = usuario.getNombreUsuario();
+			String cedulaUsuario = usuario.getCedulaUsuario();
+			String correoUsuario = usuario.getCorreoUsuario();
+			String usuarioConsulta = usuario.getUsuario();
+			if (nombreUsuario != null) {
+				
+				request.setAttribute("Nombre", nombreUsuario);
+				request.setAttribute("Cedula", cedulaUsuario);
+				request.setAttribute("Correo", correoUsuario);
+				request.setAttribute("Usuario", usuarioConsulta);
+				
+				rd.forward(request, response);
+				
+			}else {
+				JOptionPane optionPane = new JOptionPane("La cedula del usuario no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("consultarUsuario.jsp");
+			}
+		}
+		
+		//Consulta Usuario
+		
+		if (botonConsultaCliente != null) {
+			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaCliente.jsp");
+			
+			cliente cliente = conexion.consultarCliente(botonConsultaCliente);
+			String nombreCliente = cliente.getNombreCliente();
+			String cedulaCliente = cliente.getCedulaCliente();
+			String correoCliente = cliente.getCorreoCliente();
+			String telefonoCliente = cliente.getTelefonoCliente();
+			String direccionCliente = cliente.getDireccionCliente();
+			System.out.println("nombreCliente");
+			if (nombreCliente != null) {			
+				request.setAttribute("Nombre", nombreCliente);
+				request.setAttribute("Cedula", cedulaCliente);
+				request.setAttribute("Correo", correoCliente);
+				request.setAttribute("Telefono", telefonoCliente);
+				request.setAttribute("Direccion", direccionCliente);
+				rd.forward(request, response);
+			}
+			else {
+				JOptionPane optionPane = new JOptionPane("La cedula del cliente no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("consultarCliente.jsp");
+			}
+		}
+		
+		if (botonConsultaProveedor != null) {
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaProveedor.jsp");
+
+			proveedor proveedor = conexion.consultarProveedor(botonConsultaProveedor);
+			String nombreProveedor = proveedor.getNombreProveedor();
+			String nitProveedor = proveedor.getNit();
+			String ciudadProveedor = proveedor.getCiudadProveedor();
+			String telefonoProveedor = proveedor.getTelefonoProveedor();
+			String direccionProveedor = proveedor.getDireccionProveedor();
+			if (nombreProveedor != null) {
+				
+				request.setAttribute("Nombre", nombreProveedor);
+				request.setAttribute("Nit", nitProveedor);
+				request.setAttribute("Ciudad", ciudadProveedor);
+				request.setAttribute("Telefono", telefonoProveedor);
+				request.setAttribute("Direccion", direccionProveedor);
+				
+				rd.forward(request, response);
+				
+			}
+			else {
+				JOptionPane optionPane = new JOptionPane("El nit del proveedor no existe",
+						JOptionPane.WARNING_MESSAGE);
+				JDialog dialog = optionPane.createDialog("MinTech");
+				dialog.setAlwaysOnTop(true);
+				dialog.setVisible(true);
+				response.sendRedirect("consultarProveedor.jsp");
+			}
+		}
+		
+		
 	}
 
 	/**
@@ -133,7 +228,7 @@ public class tv_servlet extends HttpServlet {
 
 		// Modulo usuarios
 		//Consulta usuario
-		
+		/*
 		else if (botonConsultaUsuario != null) {
 
 			usuario usuario = conexion.consultarUsuario(botonConsultaUsuario);
@@ -157,7 +252,7 @@ public class tv_servlet extends HttpServlet {
 				dialog.setVisible(true);
 				response.sendRedirect("consultarUsuario.jsp");
 			}
-		}
+		}*/
 
 		//Crea usuario
 		
@@ -236,7 +331,7 @@ public class tv_servlet extends HttpServlet {
 		
 		//Modulo clientes
 		//Consulta cliente
-		
+		/*
 		else if (botonConsultaCliente != null) {
 
 			cliente cliente = conexion.consultarCliente(botonConsultaCliente);
@@ -261,7 +356,7 @@ public class tv_servlet extends HttpServlet {
 				dialog.setVisible(true);
 				response.sendRedirect("consultarCliente.jsp");
 			}
-		}
+		}*/
 		
 		else if (CreaCedulaCliente != null) {
 			cliente cedula = conexion.consultarCliente(CreaCedulaCliente);
@@ -328,7 +423,7 @@ public class tv_servlet extends HttpServlet {
 		}
 		
 		//Modulo proveedores
-		
+		/*
 		else if (botonConsultaProveedor != null) {
 
 			proveedor proveedor = conexion.consultarProveedor(botonConsultaProveedor);
@@ -353,7 +448,7 @@ public class tv_servlet extends HttpServlet {
 				dialog.setVisible(true);
 				response.sendRedirect("consultarProveedor.jsp");
 			}
-		}
+		}*/
 		
 		else if (CreaNitProveedor != null) {
 			proveedor proveedor = conexion.consultarProveedor(CreaNitProveedor);
