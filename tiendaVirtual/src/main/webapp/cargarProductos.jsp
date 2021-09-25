@@ -14,13 +14,13 @@
 		<section class="registro">
 			<h2>Cargar productos</h2>
 			<br>
-			<p>Nombre del archivo:</p>
-			<form action=./tv_servlet method="get">
-				<input class="ingdatos" type="text" name="cedulaCliente"> <button class="boton-crea">Examninar</button>
-				<br> <br>
+			<form action=./FileTest method="post" enctype="multipart/form-data" >
+		
+				<input type='file' name='fileName' required/> 
 				<p>
-					<input type="submit" class="boton-crea" id="botonConsulta"
-						value="Cargar">
+				<br>
+				<input type="submit" class="boton-crea" value="Subir" /> <br> <br>
+
 				</p>
 
 				<br>
