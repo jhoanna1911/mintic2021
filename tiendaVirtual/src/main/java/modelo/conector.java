@@ -1,9 +1,20 @@
 package modelo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.csvreader.CsvReader;
 
 import com.mysql.cj.xdevapi.Statement;
 
@@ -14,10 +25,13 @@ public class conector {
 	public static void conectar() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "abc123");
+
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "1234");
 			System.out.println("Conexion exitosa con la base de datos");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error en el controlador de conexión" + e);
+			System.out.println("Error en el controlador de conexiÃ³n" + e);
 		} catch (SQLException e) {
 			System.out.println("No se puede conectar con la base de datos");
 			e.printStackTrace();
@@ -189,7 +203,7 @@ public class conector {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void EliminaCliente(String cedulaE) {
 		conectar();
 		String consulta = "DELETE FROM tienda_virtual.clientes WHERE cedulaCliente = " + cedulaE;
@@ -201,9 +215,9 @@ public class conector {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Modulo proveedores
-	
+
 	public proveedor consultarProveedor(String nit) {
 		conectar();
 		proveedor proveedor = new proveedor();
@@ -229,7 +243,7 @@ public class conector {
 		}
 		return proveedor;
 	}
-	
+
 	public void InsertarProveedor(String nit, String nombre, String direccion, String telefono, String ciudad) {
 		conectar();
 		String consulta = "INSERT INTO tienda_virtual.proveedores (nit,nombreProveedor,direccionProveedor,telefonoProveedor,ciudadProveedor) VALUES ('"
@@ -242,12 +256,12 @@ public class conector {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void ActualizarProveedor(String nit, String nombre, String direccion, String telefono, String ciudad) {
 		conectar();
-		String consulta = "UPDATE tienda_virtual.proveedores SET nombreProveedor = '" + nombre + "' , direccionProveedor = '"
-				+ direccion + "' , telefonoProveedor = '" + telefono + "' , ciudadProveedor = '" + ciudad
-				+ "' WHERE nit = " + nit;
+		String consulta = "UPDATE tienda_virtual.proveedores SET nombreProveedor = '" + nombre
+				+ "' , direccionProveedor = '" + direccion + "' , telefonoProveedor = '" + telefono
+				+ "' , ciudadProveedor = '" + ciudad + "' WHERE nit = " + nit;
 		try {
 			java.sql.Statement stm = con.createStatement();
 			stm.executeUpdate(consulta);
@@ -256,7 +270,7 @@ public class conector {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void EliminaProveedor(String nit) {
 		conectar();
 		String consulta = "DELETE FROM tienda_virtual.proveedores WHERE nit = " + nit;
@@ -269,4 +283,72 @@ public class conector {
 		}
 	}
 
+	// Modulo productos
+	public List<productos> leerProductos() throws IOException {
+		conectar();
+		List<productos> productos = new ArrayList<productos>();
+		CsvReader leerProductos;
+		try {
+			leerProductos = new CsvReader("C:\\Documentos\\MinTic\\Ciclo3\\ProductosMinTech.csv");
+			leerProductos.readHeaders();
+			while (leerProductos.readRecord()) {
+
+				String codigoProducto = leerProductos.get(0);
+				String nombreProducto = leerProductos.get(1);
+				String nitProveedor = leerProductos.get(2);
+				String precioCompra = leerProductos.get(3);
+				String iva = leerProductos.get(4);
+				String precioVenta = leerProductos.get(5);
+
+				productos.add(
+						new productos(codigoProducto, nombreProducto, nitProveedor, precioCompra, iva, precioVenta));
+			
+				
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return productos;
+	}
+	
+	
+	public Boolean subirProductos(List<productos> productos) throws IOException, SQLException {
+		Boolean valido = false;
+		conectar();
+		String eliminar = "DELETE FROM tienda_virtual.productos";
+		java.sql.Statement stm = con.createStatement();
+		stm.executeUpdate(eliminar);
+		String query = "INSERT INTO tienda_virtual.productos(codigoProducto, nombreProducto, nitProveedor, precioCompra, iva, precioVenta) VALUES(?,?,?,?,?,?)";
+
+		try {
+			PreparedStatement ps = (PreparedStatement) con.prepareStatement(query);
+			for(int i=0; i< productos.size(); i++) {
+				ps.setString(1, productos.get(i).getCodigoProducto());
+				ps.setString(2, productos.get(i).getNombreProducto());
+				ps.setString(3, productos.get(i).getNitProveedor());
+				ps.setString(4, productos.get(i).getPrecioCompra());
+				ps.setString(5, productos.get(i).getIva());
+				ps.setString(6, productos.get(i).getPrecioVenta());
+				
+				System.out.println("Se inserta" + (i+1) + productos.size());
+				String prov = productos.get(i).getNitProveedor();
+				String proveedor = "SELECT * FROM tienda_virtual.proveedores WHERE nit = " + prov ;
+				java.sql.Statement stmc = con.createStatement();
+				ResultSet rs = stmc.executeQuery(proveedor);
+				if (rs.next()) {
+				ps.executeUpdate();
+				valido = true;
+				}
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return valido;
+		
+	}
+	
 }
