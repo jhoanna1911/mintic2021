@@ -17,13 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import org.apache.tomcat.util.http.fileupload.RequestContext;
+//import org.apache.tomcat.util.http.fileupload.RequestContext;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
  
  
 /**
@@ -34,13 +35,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 public class FileTest extends HttpServlet {
  
 	 // Subir directorio de almacenamiento de archivos
-	private static final String UPLOAD_DIRECTORY = "C:\\Documentos\\MinTic\\Ciclo3";
+	//private static final String UPLOAD_DIRECTORY = "C:\\Documentos\\MinTic\\Ciclo3";
+	private static final String UPLOAD_DIRECTORY = "C:\\Users\\Kike\\Downloads";
  
 	 // Cargar configuración
 	private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3; // 3MB
 	private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
 	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
- 
+	private String filePath;
 	/**
 	  * Cargar datos y guardar archivos
 	 */
@@ -94,8 +96,9 @@ public class FileTest extends HttpServlet {
 					 // manejar campos que no están en el formulario
 					if (!item.isFormField()) {
 						String fileName = new File(item.getName()).getName();
-						String filePath = uploadPath + File.separator + fileName;
+						filePath = uploadPath + File.separator + fileName;
 						File storeFile = new File(filePath);
+						
 						 // Salida de la ruta de carga del archivo en la consola
 						System.out.println(filePath);
 						 // guardar archivo en el disco duro
@@ -110,32 +113,39 @@ public class FileTest extends HttpServlet {
  
 		conector conexion;
 		conexion = new conector();
-		
-		List<productos> productos = conexion.leerProductos();
-		try {
-			Boolean valido = conexion.subirProductos(productos);
-			if(valido) {	
-			JOptionPane optionPane = new JOptionPane("Los productos se cargaron exitosamente", JOptionPane.WARNING_MESSAGE);
-			JDialog dialog = optionPane.createDialog("MinTech");
-			dialog.setAlwaysOnTop(true);
-			dialog.setVisible(true);
-			response.sendRedirect("cargarProductos.jsp");
-			}
-			else {
-				JOptionPane optionPane = new JOptionPane("Por favor verifique que los proveedores de los productos existan en el sistema", JOptionPane.WARNING_MESSAGE);
+		System.out.println(filePath+" ****");
+		if (FilenameUtils.getExtension(filePath).equals("csv")){
+			List<productos> productos = conexion.leerProductos(filePath);
+			try {
+				Boolean valido = conexion.subirProductos(productos);
+				if(valido) {	
+				JOptionPane optionPane = new JOptionPane("Los productos se cargaron exitosamente", JOptionPane.WARNING_MESSAGE);
 				JDialog dialog = optionPane.createDialog("MinTech");
 				dialog.setAlwaysOnTop(true);
 				dialog.setVisible(true);
 				response.sendRedirect("cargarProductos.jsp");
+				}
+				else {
+					JOptionPane optionPane = new JOptionPane("Por favor verifique que los proveedores de los productos existan en el sistema", JOptionPane.WARNING_MESSAGE);
+					JDialog dialog = optionPane.createDialog("MinTech");
+					dialog.setAlwaysOnTop(true);
+					dialog.setVisible(true);
+					response.sendRedirect("cargarProductos.jsp");
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		
+		}else {
+			JOptionPane optionPane = new JOptionPane("El Archivo debe ser de tipo .csv", JOptionPane.WARNING_MESSAGE);
+			JDialog dialog = optionPane.createDialog("MinTech");
+			dialog.setAlwaysOnTop(true);
+			dialog.setVisible(true);
+			response.sendRedirect("cargarProductos.jsp");
+	}
 	}
 }

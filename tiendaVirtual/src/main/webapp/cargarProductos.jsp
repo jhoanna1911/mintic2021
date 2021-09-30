@@ -16,7 +16,7 @@
 			<br>
 			<form action=./FileTest method="post" enctype="multipart/form-data" >
 		
-				<input type='file' name='fileName' required/> 
+				<input type='file' name='fileName' accept=".csv" required/> 
 				<p>
 				<br>
 				<input type="submit" class="boton-crea" value="Subir" /> <br> <br>

@@ -53,10 +53,9 @@ public class tv_servlet extends HttpServlet {
 
 		// Modulo usuarios
 
-		if (botonConsultaUsuario != null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaUsuario.jsp");
-
-		//Consulta cliente
+		
+			
+		//Consulta Usuario
 		
 		if (botonConsultaUsuario != null) {
 			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaUsuario.jsp");
@@ -68,24 +67,13 @@ public class tv_servlet extends HttpServlet {
 			String correoUsuario = usuario.getCorreoUsuario();
 			String usuarioConsulta = usuario.getUsuario();
 
-
 			if (nombreUsuario != null) {
-
-
-			if (nombreUsuario != null) {
-				
-
 				request.setAttribute("Nombre", nombreUsuario);
 				request.setAttribute("Cedula", cedulaUsuario);
 				request.setAttribute("Correo", correoUsuario);
 				request.setAttribute("Usuario", usuarioConsulta);
-
-
 				rd.forward(request, response);
-			} else {
-				
-				rd.forward(request, response);
-				
+			
 			}else {
 
 				JOptionPane optionPane = new JOptionPane("La cedula del usuario no existe",
@@ -100,14 +88,12 @@ public class tv_servlet extends HttpServlet {
 
 		// Modulo clientes
 
-		if (botonConsultaCliente != null) {
-			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaCliente.jsp");
-
-
 		
-		//Consulta Usuario
+		//Consulta Cliente
 		
 		if (botonConsultaCliente != null) {
+			
+		
 			RequestDispatcher rd = request.getRequestDispatcher("/respuestaConsultaCliente.jsp");
 			
 
@@ -118,7 +104,7 @@ public class tv_servlet extends HttpServlet {
 			String telefonoCliente = cliente.getTelefonoCliente();
 			String direccionCliente = cliente.getDireccionCliente();
 
-			if (nombreCliente != null) {
+		
 
 
 			System.out.println("nombreCliente");
@@ -132,9 +118,6 @@ public class tv_servlet extends HttpServlet {
 
 				rd.forward(request, response);
 
-			} else {
-
-				rd.forward(request, response);
 			}
 			else {
 
@@ -149,10 +132,6 @@ public class tv_servlet extends HttpServlet {
 
 
 		// Modulo proveedores
-
-		if (botonConsultaProveedor != null) {
-
-
 		
 		if (botonConsultaProveedor != null) {
 			
@@ -176,13 +155,7 @@ public class tv_servlet extends HttpServlet {
 
 				rd.forward(request, response);
 
-			} else {
-				JOptionPane optionPane = new JOptionPane("El nit del proveedor no existe", JOptionPane.WARNING_MESSAGE);
-				
-				rd.forward(request, response);
-				
-			}
-			else {
+			}else {
 				JOptionPane optionPane = new JOptionPane("El nit del proveedor no existe",
 						JOptionPane.WARNING_MESSAGE);
 
