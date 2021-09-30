@@ -26,7 +26,7 @@ public class conector {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "abc123");
+			//con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "abc123");
 
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/tienda_virtual", "root", "1234");
 			System.out.println("Conexion exitosa con la base de datos");
@@ -284,22 +284,25 @@ public class conector {
 	}
 
 	// Modulo productos
-	public List<productos> leerProductos() throws IOException {
+	public List<productos> leerProductos(String url) throws IOException {
 		conectar();
 		List<productos> productos = new ArrayList<productos>();
 		CsvReader leerProductos;
 		try {
-			leerProductos = new CsvReader("C:\\Documentos\\MinTic\\Ciclo3\\ProductosMinTech.csv");
+			leerProductos = new CsvReader(url);
 			leerProductos.readHeaders();
 			while (leerProductos.readRecord()) {
 
-				String codigoProducto = leerProductos.get(0);
-				String nombreProducto = leerProductos.get(1);
-				String nitProveedor = leerProductos.get(2);
-				String precioCompra = leerProductos.get(3);
-				String iva = leerProductos.get(4);
-				String precioVenta = leerProductos.get(5);
-
+				String productosobt = leerProductos.get(0);
+				String[] producto = (productosobt.split(";"));
+		
+				String codigoProducto = producto[0];
+				String nombreProducto = producto[1];
+				String nitProveedor = producto[2];
+				String precioCompra = producto[3];
+				String iva = producto[4];
+				String precioVenta = producto[5];
+				
 				productos.add(
 						new productos(codigoProducto, nombreProducto, nitProveedor, precioCompra, iva, precioVenta));
 			
